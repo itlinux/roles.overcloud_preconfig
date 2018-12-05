@@ -1,0 +1,18 @@
+= DNS Set for the Overcloud 
+
+In order to deploy the Overcloud we need to set the DNS on our undercloud netowrk. 
+The network used is ctlplane. 
+
+== Example Playbook
+
+    - hosts: undercloud
+      roles:
+         - { role: dns-for-overcloud }
+
+== License
+
+Apache
+
+== Author Information
+Remo Mattei from the Location Labs by Avast IG TEAM.
+

@@ -1,0 +1,76 @@
+= Pre Introspection
+
+Check-network-gateway
+
+Check network_gateway on the provisioning network.
+
+If network_gateway in undercloud.conf is different from undercloud_ctrl_ip, verify that the gateway exists and is reachable.
+
+    hosts: undercloud
+    groups: pre-introspection
+    metadata:
+    parameters:
+
+View validation source code.
+ctlplane-ip-range
+
+Check the number of IP addresses available to overcloud nodes.
+
+Verify that the number of IP addresses defined in dhcp_start and dhcp_end fields in undercloud.conf is not too low.
+
+    hosts: undercloud
+    groups: pre-introspection
+    metadata:
+    parameters:
+        ctlplane_iprange_min_size: 25
+
+View validation source code.
+dhcp-introspection
+
+DHCP on the Introspection Network.
+
+An unexpected DHCP server on the network used for node introspection can cause some nodes to not be inspected. This validations checks for the DHCP responses on the interface specified in ironic-inspector.conf.
+
+    hosts: undercloud
+    groups: pre-introspection
+    metadata:
+    parameters:
+
+View validation source code.
+undercloud-cpu
+
+Verify undercloud fits the CPU core requirements.
+
+Make sure that the undercloud has enough CPU cores. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/7/html/Director_Installation_and_Usage/sect-Undercloud_Requirements.html
+
+    hosts: undercloud
+    groups: prep, pre-introspection
+    metadata:
+    parameters:
+        min_undercloud_cpu_count: 8
+
+View validation source code.
+undercloud-disk-space
+
+Verify undercloud fits the disk space requirements.
+
+Make sure that the root partition on the undercloud node is large enough. We first check for an explicit /var mount point since that’s where we store logs and images and if it doesn’t exist, we fall back to /. http://tripleo.org/environments/environments.html#id5
+
+    hosts: undercloud
+    groups: prep, pre-introspection
+    metadata:
+    parameters:
+        min_undercloud_disk_gb: 60
+
+View validation source code.
+undercloud-ram
+
+Verify the undercloud fits the RAM requirements.
+
+Verify that the undercloud has enough RAM. https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/7/html/Director_Installation_and_Usage/sect-Undercloud_Requirements.html
+
+    hosts: undercloud
+    groups: prep, pre-introspection
+    metadata:
+    parameters:
+        min_undercloud_ram_gb: 16

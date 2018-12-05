@@ -1,0 +1,42 @@
+---
+# Tasks for pre-introspection
+- name: set Pre-Introspection
+  shell: |
+    source "{{ stack_user_home }}"/stackrc && openstack workflow execution create tripleo.validations.v1.run_groups '{"group_names":["pre-introspection"]}'
+
+- name: check Pre-Introspection
+  shell: |
+     source "{{ stack_user_home }}"/stackrc && openstack workflow execution list -f json -c "Workflow name"|grep groups
+  register: pre_intro
+  tags: intro
+
+- name: intro
+  debug:
+    var: pre_intro.stdout_lines
+  tags:  intro
+
+# Tasks for configuring DNS
+- name: check dns
+  shell: "source {{ stack_user_home }}/stackrc && openstack subnet show ctlplane-subnet -f json -c dns_nameservers|jq '.dns_nameservers'"
+  register: dns_check
+  changed_when: false
+  tags: dns
+
+- name: Set DNS for the ctlplane Network
+  shell: "source {{ stack_user_home }}/stackrc && openstack subnet set ctlplane-subnet --dns-nameserver {{ item }}"
+  when: dns_check.stdout.find(item) == -1
+  with_items:
+     - "{{ dnsserver1 }}"
+     - "{{ dnsserver2 }}"
+  tags: dns
+
+- name: verify DNS for the crtplane Network
+  shell: source "{{ stack_user_home }}"/stackrc && openstack subnet show ctlplane-subnet  |grep dns
+  register: dns
+  tags: dns_out
+  changed_when: false
+  
+- name: dns
+  debug:
+    var: dns.stdout_lines
+  tags:  dns_out
