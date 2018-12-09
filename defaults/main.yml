@@ -1,2 +1,5 @@
 ---
 # defaults file for roles.overcloud_preconfig
+openstack_preconfig_dnsserver1: ""
+openstack_preconfig_dnsserver2: ""
+stack_user_home: ""
