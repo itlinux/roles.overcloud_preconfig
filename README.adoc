@@ -4,7 +4,7 @@ Sets pre-introspection and DNS for the Control Plane.
 
 == Requirements
 
-This deploy should only be run if deploy.openstack_undercloud has already been 
+This deploy should only be run if deploy.openstack_undercloud has already been
 successfully run against the Undercloud VM.
 
 
@@ -28,9 +28,9 @@ openstack_preconfig_dnsserver2: ""
 Apache
 
 == Author Information
-Remo Mattei
-Infrastructure Team 
-Avast Software Inc.
+Remo Mattei +
+Infrastructure Team +
+Avast Software Inc. +
 
 
 == Notes about pre-introspection
@@ -112,4 +112,4 @@ Verify that the undercloud has enough RAM. https://access.redhat.com/documentati
         min_undercloud_ram_gb: 16
 ....
 =======
-= OpenStack Overcloud Preconfig Role  
+= OpenStack Overcloud Preconfig Role
