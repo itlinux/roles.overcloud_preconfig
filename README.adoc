@@ -112,4 +112,5 @@ Verify that the undercloud has enough RAM. https://access.redhat.com/documentati
         min_undercloud_ram_gb: 16
 ....
 =======
+
 = OpenStack Overcloud Preconfig Role
